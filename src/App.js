@@ -11,23 +11,31 @@ const App = () => {
    const [body, setBody] = useState('');
    const [posts, setPosts] = useState([]);
 
-    // GET with Axios
+  // GET with Axios
    useEffect(() => {
-      const fetchPost = async () => {
+    const fetchPost = async () => {
+      try {
          let response = await client.get('?_limit=10');
          setPosts(response.data);
-      };
-      fetchPost();
-   }, []);
+      } catch (error) {
+         console.log(error);
+      }
+   };
+   fetchPost();
+ }, []);
 
-   // DELETE with Axios
+  // DELETE with Axios
    const deletePost = async (id) => {
+    try{
       await client.delete(`${id}`);
       setPosts(
          posts.filter((post) => {
             return post.id !== id;
          })
       );
+    } catch(error) {
+      console.log(error);
+    }   
    };
     
    // handle form submission
@@ -38,6 +46,7 @@ const App = () => {
 
    // POST with Axios
    const addPosts = async (title, body) => {
+    try{
       let response = await client.post('', {
          title: title,
          body: body,
@@ -45,6 +54,9 @@ const App = () => {
       setPosts([response.data, ...posts]);
       setTitle('');
       setBody('');
+    } catch {
+      console.log(error);
+    }   
    };
 
   return (
@@ -56,7 +68,7 @@ const App = () => {
               <h2 className="post-title">{post.title}</h2>
               <p className="post-body">{post.body}</p>
               <div className="button">
-                  <div className="delete-btn">Delete</div>
+                  <div className="delete-btn" onClick = {deletePost(post.id)}> Delete</div>
               </div>
             </div>
         );
