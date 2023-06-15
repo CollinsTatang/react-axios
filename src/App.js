@@ -7,13 +7,45 @@ const client = axios.create({
 });
 
 const App = () => {
-  const [posts, setPosts] = useState([]);
+  const [title, setTitle] = useState('');
+   const [body, setBody] = useState('');
+   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-     client.get('?_limit=10').then((response) => {
-        setPosts(response.data);
-     });
-  }, []);
+    // GET with Axios
+   useEffect(() => {
+      const fetchPost = async () => {
+         let response = await client.get('?_limit=10');
+         setPosts(response.data);
+      };
+      fetchPost();
+   }, []);
+
+   // DELETE with Axios
+   const deletePost = async (id) => {
+      await client.delete(`${id}`);
+      setPosts(
+         posts.filter((post) => {
+            return post.id !== id;
+         })
+      );
+   };
+    
+   // handle form submission
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      addPosts(title, body);
+   };
+
+   // POST with Axios
+   const addPosts = async (title, body) => {
+      let response = await client.post('', {
+         title: title,
+         body: body,
+      });
+      setPosts([response.data, ...posts]);
+      setTitle('');
+      setBody('');
+   };
 
   return (
     <div className="app">
