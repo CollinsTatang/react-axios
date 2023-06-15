@@ -54,7 +54,7 @@ const App = () => {
       setPosts([response.data, ...posts]);
       setTitle('');
       setBody('');
-    } catch {
+    } catch(error ) {
       console.log(error);
     }   
    };
@@ -68,7 +68,7 @@ const App = () => {
               <h2 className="post-title">{post.title}</h2>
               <p className="post-body">{post.body}</p>
               <div className="button">
-                  <div className="delete-btn" onClick = {deletePost(post.id)}> Delete</div>
+                  <div className="delete-btn" onClick = { deletePost(post.id) }> Delete</div>
               </div>
             </div>
         );
