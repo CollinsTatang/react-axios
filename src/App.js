@@ -1,6 +1,5 @@
-import './App.css';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const client = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com/posts" 
