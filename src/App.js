@@ -61,6 +61,29 @@ const App = () => {
 
   return (
     <div className="app">
+			<nav>
+				<h1>POSTS APP</h1>
+			</nav>
+			<div className="add-post-container">
+				<form onSubmit={handleSubmit}>
+					<input
+						type="text"
+						className="form-control"
+						value={title}
+						onChange={(e) => setTitle(e.target.value)}
+					/>
+					<textarea
+						name=""
+						className="form-control"
+						id=""
+						cols="10"
+						rows="8"
+						value={body}
+						onChange={(e) => setBody(e.target.value)}
+					></textarea>
+					<button type="submit">Add Post</button>
+				</form>
+			</div>
     <h2>All Posts 📫</h2>
       {posts.map((post) => {
         return (
